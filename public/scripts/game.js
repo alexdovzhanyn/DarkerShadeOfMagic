@@ -1,17 +1,20 @@
 document.getElementById("bgMusic").volume = 0.35;
 document.getElementById("soundEffect1").volume = 0.5;
 document.getElementById("soundEffect2").volume = 0.5;
+var player1Name = document.getElementById("player1").innerHTML.toLowerCase();
+var player2Name = document.getElementById("player2").innerHTML.toLowerCase();
 
 //DEFINES PRESET VARIABLES
 var ctx = document.getElementById("ctx").getContext("2d");
 var WIDTH = 1000;
 var HEIGHT = 500;
-var totalResources = 20;
+var totalResources = 22;
 var numResourcesLoaded = 0;
-var fps = 30;
+var fps = 38;
 var timer = 200;
 var images = {};
 var over = false;
+
 
 var soundEffect = function(number) {
   return document.getElementById("soundEffect" + number);
@@ -33,26 +36,50 @@ var loadImage = function(name) {
   images[name].src = "images/" + name + ".png";
 };
 //LOADS PLAYER 1
-loadImage("kell_left_arm");
-loadImage("kell_legs");
-loadImage("kell_body");
-loadImage("kell_right_arm");
-loadImage("kell_head");
-loadImage("kell_hair");
-loadImage("fireball");
-loadImage("kell_left_arm-left");
-loadImage("kell_legs-left");
-loadImage("kell_body-left");
-loadImage("kell_right_arm-left");
-loadImage("kell_head-left");
-loadImage("kell_hair-left");
-loadImage("fireball-left");
-loadImage("kell_left_arm-damage");
-loadImage("kell_left_arm-left-damage");
-loadImage("kell_right_arm-damage");
-loadImage("kell_right_arm-left-damage");
-loadImage("kell_head-damage");
-loadImage("kell_head-left-damage");
+loadImage(player1Name + "_left_arm");
+loadImage(player1Name + "_legs");
+loadImage(player1Name + "_body");
+loadImage(player1Name + "_right_arm");
+loadImage(player1Name + "_head");
+loadImage(player1Name + "_hair");
+loadImage(player1Name + "_ranged");
+loadImage(player1Name + "_left_arm-left");
+loadImage(player1Name + "_legs-left");
+loadImage(player1Name + "_body-left");
+loadImage(player1Name + "_right_arm-left");
+loadImage(player1Name + "_head-left");
+loadImage(player1Name + "_hair-left");
+loadImage(player1Name + "_ranged-left");
+loadImage(player1Name + "_left_arm-damage");
+loadImage(player1Name + "_left_arm-left-damage");
+loadImage(player1Name + "_right_arm-damage");
+loadImage(player1Name + "_right_arm-left-damage");
+loadImage(player1Name + "_head-damage");
+loadImage(player1Name + "_head-left-damage");
+loadImage(player1Name + "_special");
+
+//LOADS PLAYER 2
+loadImage(player2Name + "_left_arm");
+loadImage(player2Name + "_legs");
+loadImage(player2Name + "_body");
+loadImage(player2Name + "_right_arm");
+loadImage(player2Name + "_head");
+loadImage(player2Name + "_hair");
+loadImage(player2Name + "_ranged");
+loadImage(player2Name + "_left_arm-left");
+loadImage(player2Name + "_legs-left");
+loadImage(player2Name + "_body-left");
+loadImage(player2Name + "_right_arm-left");
+loadImage(player2Name + "_head-left");
+loadImage(player2Name + "_hair-left");
+loadImage(player2Name + "_ranged-left");
+loadImage(player2Name + "_left_arm-damage");
+loadImage(player2Name + "_left_arm-left-damage");
+loadImage(player2Name + "_right_arm-damage");
+loadImage(player2Name + "_right_arm-left-damage");
+loadImage(player2Name + "_head-damage");
+loadImage(player2Name + "_head-left-damage");
+loadImage(player2Name + "_special");
 
 var actorList = {};
 var entityList = {};
@@ -60,29 +87,69 @@ var entityList = {};
 //GETS DIRECTION OF PLAYER
 var getValue = function(player) {
   if (actorList[player].directionFacing === "left") {
-    return -20;
+    return -5;
   }
   else {
-    return 90;
+    return 55;
   }
 };
-//SHOOTS FIREBALL
-var shootFireball = function(player){
-  var fireball = {
+//MELEE ATTACK
+var melee = function(player, name){
+  var hit = {
     id: Math.random(),
     originX: actorList[player].spawnX + getValue(player),
     originY: actorList[player].spawnY + 80,
-    moveX: 20,
+    moveX: 30,
+    direction: actorList[player].directionFacing,
+    duration: 19,
+    height: 20,
+    width: 20,
+    shotBy: player,
+    shotByName: name,
+    attackType: "melee",
+  }
+  entityList[hit.id] = hit;
+};
+
+//SHOOTS FIREBALL
+var shootRangedAttack = function(player, name){
+  var ranged = {
+    id: Math.random(),
+    originX: actorList[player].spawnX + getValue(player),
+    originY: actorList[player].spawnY + 80,
+    moveX: 30,
     direction: actorList[player].directionFacing,
     duration: 0,
     height: 20,
     width: 20,
     shotBy: player,
+    shotByName: name,
+    attackType: "ranged",
   }
-  entityList[fireball.id] = fireball;
+  entityList[ranged.id] = ranged;
 };
+
+//SPECIAL ATTACK
+var shootSpecialAttack = function(player, name) {
+  var special = {
+    id: Math.random(),
+    originX: 0,
+    originY: -700,
+    moveY: 15,
+    direction: actorList[player].directionFacing,
+    duration: -100,
+    height: 20,
+    width: 1000,
+    shotBy: player,
+    shotByName: name,
+    attackType: "special",
+  }
+  entityList[special.id] = special;
+
+}
+
 //PLAYER OBJECT
-var spawn = function(player, name, spawnX, spawnY, facingRight, facingLeft){
+var spawn = function(player, name, spawnX, spawnY, facingRight, facingLeft, directionFacing){
   var actor = {
     player: player,
     name: name,
@@ -94,18 +161,33 @@ var spawn = function(player, name, spawnX, spawnY, facingRight, facingLeft){
     spawnWidth: 70,
     spawnHeight: 190,
     jumpCounter: 0,
-    attackCounter: 20,
+    meleeAttackCounter: 10,
+    rangedAttackCounter: 40,
+    meleeAttackCounter: 10,
+    specialAttackCounter: 2000,
     facingRight: facingRight,
     facingLeft: facingLeft,
     jumping: false,
     damage: false,
-    directionFacing: "right",
-    attack: function(){
-      if (actorList[player].attackCounter >= 20){
-        shootFireball(player);
-        actorList[player].attackCounter = 0;
+    directionFacing: directionFacing,
+    meleeAttack: function(){
+      if (actorList[player].meleeAttackCounter >= 10) {
+        melee(player, name);
+        actorList[player].meleeAttackCounter = 0;
+      }
+    },
+    rangedAttack: function(){
+      if (actorList[player].rangedAttackCounter >= 40){
+        shootRangedAttack(player, name);
+        actorList[player].rangedAttackCounter = 0;
         soundEffect(player).src = "audio/fireball.mp3";
         soundEffect(player).play();
+      }
+    },
+    specialAttack: function(){
+      if (actorList[player].specialAttackCounter >= 2000) {
+        shootSpecialAttack(player, name);
+        actorList[player].specialAttackCounter = 0;
       }
     },
   }
@@ -113,25 +195,9 @@ var spawn = function(player, name, spawnX, spawnY, facingRight, facingLeft){
 };
 
 //SPAWNS PLAYER 1 AND 2
-spawn(1, "Kell", 20, 20, true, false);
-spawn(2, "Lila", 800, 20, false, true);
+spawn(1, player1Name, 20, 20, true, false, "right");
+spawn(2, player2Name, 800, 20, false, true, "left");
 
-//USED TO DRAW ELLIPSES
-function drawEllipse(centerX, centerY, width, height, color) {
-  ctx.beginPath();
-  ctx.moveTo(centerX, centerY - height/2);
-  ctx.bezierCurveTo(
-    centerX + width/2, centerY - height/2,
-    centerX + width/2, centerY + height/2,
-    centerX, centerY + height/2);
-  ctx.bezierCurveTo(
-    centerX - width/2, centerY + height/2,
-    centerX - width/2, centerY - height/2,
-    centerX, centerY - height/2);
-  ctx.fillStyle = color;
-  ctx.fill();
-  ctx.closePath();
-};
 //SETS VARIABLES FOR BREATHING
 var breathInc = 0.1;
 var breathDir = 1;
@@ -155,27 +221,24 @@ function updateBreath() {
 };
 //UPDATES PLAYERS LOCATION ON SCREEN
 var updatePlayerPosition = function(){
-  if (actorList[1].movingRight) {
-    actorList[1].spawnX += 10;
-  }
-  if (actorList[1].movingLeft) {
-    actorList[1].spawnX -= 10;
+  for (key in actorList){
+    if (actorList[key].movingRight){
+      actorList[key].spawnX += 10;
+    }
+    if (actorList[key].movingLeft) {
+      actorList[key].spawnX -= 10;
+    }
   }
   if (actorList[1].jumping) {
     actorList[1].spawnY -= 40;
-    setTimeout(function() { actorList[1].jumping = false;}, 150);
-  }
-  if (actorList[2].movingRight) {
-    actorList[2].spawnX += 10;
-  }
-  if (actorList[2].movingLeft) {
-    actorList[2].spawnX -= 10;
+    setTimeout(function() { actorList[1].jumping = false;}, 150); //ENABLES GRAVITY AFTER JUMP
   }
   if (actorList[2].jumping) {
     actorList[2].spawnY -= 40;
     setTimeout(function() { actorList[2].jumping = false;}, 150);
   }
 };
+//WHEN GAME ENDS
 var gameOver = function(player){
   over = true;
   ctx.clearRect(0,0,WIDTH,HEIGHT);
@@ -191,14 +254,30 @@ var gameOver = function(player){
 var updateEntities = function(entityList){
   for (var key in entityList) {
     if (entityList[key].duration >= 20) {
-      delete entityList[key];
+      delete entityList[key]; //DELETES ENTITY AFTER EXPIRATION
     }
-    else {
+    else { //DETERMINES DIRECTION AND TYPE OF ATTACK
       if (entityList[key].direction === "right"){
-        ctx.drawImage(images["fireball"], entityList[key].originX += entityList[key].moveX, entityList[key].originY);
+        if (entityList[key].attackType === "melee") {
+          ctx.drawImage(images[entityList[key].shotByName + "_left_arm"], entityList[key].originX += entityList[key].moveX, entityList[key].originY);
+        }
+        else if (entityList[key].attackType === "ranged") {
+          ctx.drawImage(images[entityList[key].shotByName + "_ranged"], entityList[key].originX += entityList[key].moveX, entityList[key].originY);
+        }
+        else if (entityList[key].attackType === "special") {
+          ctx.drawImage(images[entityList[key].shotByName + "_special"], entityList[key].originX, entityList[key].originY += entityList[key].moveY);
+        }
       }
       else if (entityList[key].direction === "left"){
-        ctx.drawImage(images["fireball-left"], entityList[key].originX -= entityList[key].moveX, entityList[key].originY);
+        if (entityList[key].attackType === "melee") {
+          ctx.drawImage(images[entityList[key].shotByName + "_left_arm"], entityList[key].originX -= entityList[key].moveX, entityList[key].originY);
+        }
+        else if (entityList[key].attackType === "ranged") {
+          ctx.drawImage(images[entityList[key].shotByName + "_ranged-left"], entityList[key].originX -= entityList[key].moveX, entityList[key].originY);
+        }
+        else if (entityList[key].attackType === "special") {
+          ctx.drawImage(images[entityList[key].shotByName + "_special"], entityList[key].originX, entityList[key].originY += entityList[key].moveY);
+        }
       }
       entityList[key].duration++;
     }
@@ -208,7 +287,7 @@ var updateEntities = function(entityList){
 var updateActor = function(actorList) {
   for (var key in actorList) {
     if (actorList[key].spawnY <= HEIGHT - actorList[key].spawnHeight) {
-      if (actorList[key].jumping === false) {
+      if (actorList[key].jumping === false) { //ENABLES GRAVITY IF CHARACTER IS NOT JUMPING
         actorList[key].spawnY -= actorList[key].changeY;
       }
     }
@@ -220,52 +299,42 @@ var updateActor = function(actorList) {
     }
     var x = actorList[key].spawnX;
     var y = actorList[key].spawnY;
-    if (actorList[key].facingRight === true) {
-      ctx.drawImage(images["kell_right_arm"], x , y - breathAmt);
-      ctx.drawImage(images["kell_body"], x, y);
-      ctx.drawImage(images["kell_legs"], x, y);
-      ctx.drawImage(images["kell_left_arm"], x  , y - breathAmt);
-      ctx.drawImage(images["kell_head"], x , y - breathAmt);
-      ctx.drawImage(images["kell_hair"], x , y - breathAmt);
-      drawEllipse(x + 85, y + 75 - breathAmt, 8, 14, "#4d88ff"); // Left Eye
-      drawEllipse(x + 100, y + 75 - breathAmt, 8, 14, "black"); // Right Eye
-      drawEllipse(x + 90, y + 165, 160 - breathAmt, 6);
+    if (actorList[key].facingRight === true) { //RENDERS CHARACTER WITH BREATHING ANIMATION
+      ctx.drawImage(images[actorList[key].name + "_right_arm"], x , y - breathAmt);
+      ctx.drawImage(images[actorList[key].name + "_body"], x, y);
+      ctx.drawImage(images[actorList[key].name + "_legs"], x, y);
+      ctx.drawImage(images[actorList[key].name + "_left_arm"], x  , y - breathAmt);
+      ctx.drawImage(images[actorList[key].name + "_head"], x , y - breathAmt);
+      ctx.drawImage(images[actorList[key].name + "_hair"], x , y - breathAmt);
     }
     if (actorList[key].facingLeft === true) {
-      ctx.drawImage(images["kell_right_arm-left"], x , y - breathAmt);
-      ctx.drawImage(images["kell_body-left"], x, y);
-      ctx.drawImage(images["kell_legs-left"], x, y);
-      ctx.drawImage(images["kell_left_arm-left"], x  , y - breathAmt);
-      ctx.drawImage(images["kell_head-left"], x , y - breathAmt);
-      ctx.drawImage(images["kell_hair-left"], x , y - breathAmt);
-      drawEllipse(x + 65, y + 75 - breathAmt, 8, 14, "#4d88ff"); // Left Eye
-      drawEllipse(x + 50, y + 75 - breathAmt, 8, 14, "black"); // Right Eye
-      drawEllipse(x + 90, y + 165, 160 - breathAmt, 6);
+      ctx.drawImage(images[actorList[key].name + "_right_arm-left"], x , y - breathAmt);
+      ctx.drawImage(images[actorList[key].name + "_body-left"], x, y);
+      ctx.drawImage(images[actorList[key].name + "_legs-left"], x, y);
+      ctx.drawImage(images[actorList[key].name + "_left_arm-left"], x  , y - breathAmt);
+      ctx.drawImage(images[actorList[key].name + "_head-left"], x , y - breathAmt);
+      ctx.drawImage(images[actorList[key].name + "_hair-left"], x , y - breathAmt);
     }
     if (actorList[key].damage === true && actorList[key].facingRight === true) {
-      ctx.drawImage(images["kell_right_arm-damage"], x , y - breathAmt);
-      ctx.drawImage(images["kell_body"], x, y);
-      ctx.drawImage(images["kell_legs"], x, y);
-      ctx.drawImage(images["kell_left_arm-damage"], x  , y - breathAmt);
-      ctx.drawImage(images["kell_head-damage"], x , y - breathAmt);
-      ctx.drawImage(images["kell_hair"], x , y - breathAmt);
-      drawEllipse(x + 85, y + 75 - breathAmt, 8, 14, "#4d88ff"); // Left Eye
-      drawEllipse(x + 100, y + 75 - breathAmt, 8, 14, "black"); // Right Eye
-      drawEllipse(x + 90, y + 165, 160 - breathAmt, 6);
+      ctx.drawImage(images[actorList[key].name + "_right_arm-damage"], x , y - breathAmt);
+      ctx.drawImage(images[actorList[key].name + "_body"], x, y);
+      ctx.drawImage(images[actorList[key].name + "_legs"], x, y);
+      ctx.drawImage(images[actorList[key].name + "_left_arm-damage"], x  , y - breathAmt);
+      ctx.drawImage(images[actorList[key].name + "_head-damage"], x , y - breathAmt);
+      ctx.drawImage(images[actorList[key].name + "_hair"], x , y - breathAmt);
     }
     if (actorList[key].damage === true && actorList[key].facingLeft === true) {
-      ctx.drawImage(images["kell_right_arm-left-damage"], x , y - breathAmt);
-      ctx.drawImage(images["kell_body-left"], x, y);
-      ctx.drawImage(images["kell_legs-left"], x, y);
-      ctx.drawImage(images["kell_left_arm-left-damage"], x  , y - breathAmt);
-      ctx.drawImage(images["kell_head-left-damage"], x , y - breathAmt);
-      ctx.drawImage(images["kell_hair-left"], x , y - breathAmt);
-      drawEllipse(x + 65, y + 75 - breathAmt, 8, 14, "#4d88ff"); // Left Eye
-      drawEllipse(x + 50, y + 75 - breathAmt, 8, 14, "black"); // Right Eye
-      drawEllipse(x + 90, y + 165, 160 - breathAmt, 6);
+      ctx.drawImage(images[actorList[key].name + "_right_arm-left-damage"], x , y - breathAmt);
+      ctx.drawImage(images[actorList[key].name + "_body-left"], x, y);
+      ctx.drawImage(images[actorList[key].name + "_legs-left"], x, y);
+      ctx.drawImage(images[actorList[key].name + "_left_arm-left-damage"], x  , y - breathAmt);
+      ctx.drawImage(images[actorList[key].name + "_head-left-damage"], x , y - breathAmt);
+      ctx.drawImage(images[actorList[key].name + "_hair-left"], x , y - breathAmt);
     }
-    actorList[key].jumpCounter++;
-    actorList[key].attackCounter++;
+    actorList[key].jumpCounter++; //UPDATES ALL PLAYER COUNTERS
+    actorList[key].meleeAttackCounter++;
+    actorList[key].rangedAttackCounter++;
+    actorList[key].specialAttackCounter++;
     if (actorList[key].hp <= 0){
       gameOver(actorList[key]);
     }
@@ -286,9 +355,17 @@ document.onkeydown = function(event) {
     actorList[1].facingLeft = true;
     actorList[1].directionFacing = "left";
   }
-  //MAIN ATTACK
+  //MELEE ATTACK
+  else if (event.keyCode === 67) {
+    actorList[1].meleeAttack();
+  }
+  //RANGED ATTACK
   else if (event.keyCode === 70) {
-    actorList[1].attack();
+    actorList[1].rangedAttack();
+  }
+  //SPECIAL ATTACK
+  else if (event.keyCode === 88) {
+    actorList[1].specialAttack();
   }
   else if (event.keyCode === 39){
     actorList[2].movingRight = true;
@@ -302,8 +379,14 @@ document.onkeydown = function(event) {
     actorList[2].facingLeft = true;
     actorList[2].directionFacing = "left";
   }
+  else if (event.keyCode === 191) {
+    actorList[2].meleeAttack();
+  }
   else if (event.keyCode === 190) {
-    actorList[2].attack();
+    actorList[2].rangedAttack();
+  }
+  else if (event.keyCode === 188) {
+    actorList[2].specialAttack();
   }
 };
 //UNSET MOVEMENT AFTER KEY IS NO LONGER BEING PRESSED
@@ -350,10 +433,19 @@ var detectCollision = function(actorList, entityList){
     if (actorList[1].spawnX < entityList[entity].originX + entityList[entity].width &&
      actorList[1].spawnX + actorList[1].spawnWidth > entityList[entity].originX &&
      actorList[1].spawnY < entityList[entity].originY + entityList[entity].height &&
-     actorList[1].spawnHeight + actorList[1].spawnY > entityList[entity].originY) {
+     actorList[1].spawnHeight + actorList[1].spawnY > entityList[entity].originY &&
+     entityList[entity].shotBy != actorList[1].player) {
        actorList[1].damage = true;
        setTimeout(function() {actorList[1].damage = false;}, 200);
-       actorList[1].hp -= 1;
+       if (entityList[entity].attackType === "melee") {
+        actorList[1].hp -= 1;
+       }
+       else if (entityList[entity].attackType === "ranged") {
+         actorList[1].hp -= 3;
+       }
+       else if (entityList[entity].attackType === "special") {
+         actorList[1].hp -= 5;
+       }
        delete entityList[entity];
        soundEffect(1).src = "audio/kell_pain.mp3";
        soundEffect(1).play();
@@ -361,12 +453,21 @@ var detectCollision = function(actorList, entityList){
     if (actorList[2].spawnX < entityList[entity].originX + entityList[entity].width &&
      actorList[2].spawnX + actorList[2].spawnWidth > entityList[entity].originX &&
      actorList[2].spawnY < entityList[entity].originY + entityList[entity].height &&
-     actorList[2].spawnHeight + actorList[2].spawnY > entityList[entity].originY) {
+     actorList[2].spawnHeight + actorList[2].spawnY > entityList[entity].originY &&
+     entityList[entity].shotBy !== actorList[2].player) { //ALLOWS ONLY VALID COLLISIONS (PLAYER CANNOT DAMAGE SELF)
        actorList[2].damage = true;
        setTimeout(function() {actorList[2].damage = false;}, 200);
-       actorList[2].hp -= 1;
+       if (entityList[entity].attackType === "melee") {
+        actorList[2].hp -= 1; //MELEE ATTACK DOES 1HP DAMAGE
+       }
+       else if (entityList[entity].attackType === "ranged") {
+         actorList[2].hp -= 3; //RANGED ATTACK DOES 3HP DAMAGE
+       }
+       else if (entityList[entity].attackType === "special") {
+         actorList[2].hp -= 5; //SPECIAL ATTACK DOES 5HP DAMAGE
+       }
        delete entityList[entity];
-       soundEffect(2).src = "audio/kell_pain.mp3";
+       soundEffect(2).src = "audio/kell_pain.mp3"; //PLAYS SOUND EFFECT ON DAMAGE TAKEN
        soundEffect(2).play();
     }
   }

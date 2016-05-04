@@ -1,0 +1,64 @@
+<link href="characterselect.css" rel="stylesheet" type="text/css">
+<script src="https://code.jquery.com/jquery-2.2.1.js"></script>
+<script src="scripts/charselect.js"></script>
+<form method="POST" action="/characterselected" id="selectionContainer">
+  <div id="left">
+    <h1 class="header">Player 1</h1>
+    <div id="player1" class="players">
+      <div id="kell1" class="gridOption" onclick="select1(this, '1');">
+        <img src="images/kell.png" class="characterImg"/>
+        <p class="characterName">Kell</p>
+      </div>
+      <div id="lila1" class="gridOption" onclick="select1(this, '2');">
+        <img src="images/kell.png" class="characterImg"/>
+        <p class="characterName">Lila</p>
+      </div>
+      <div id="holland1" class="gridOption" onclick="select1(this, '3');">
+        <img src="images/kell.png" class="characterImg"/>
+        <p class="characterName">Holland</p>
+      </div>
+      <div id="astrid1" class="gridOption" onclick="select1(this, '4');">
+        <img src="images/kell.png" class="characterImg"/>
+        <p class="characterName">Astrid</p>
+      </div>
+    </div>
+  </div>
+  <div id="right">
+    <h1 class="header">Player 2</h1>
+    <div id="player2" class="players">
+      <div id="kell2" class="gridOption" onclick="select2(this, '1');">
+        <img src="images/kell.png" class="characterImg"/>
+        <p class="characterName">Kell</p>
+      </div>
+      <div id="lila2" class="gridOption" onclick="select2(this, '2');">
+        <img src="images/kell.png" class="characterImg"/>
+        <p class="characterName">Lila</p>
+      </div>
+      <div id="holland2" class="gridOption" onclick="select2(this, '3');">
+        <img src="images/kell.png" class="characterImg"/>
+        <p class="characterName">Holland</p>
+      </div>
+      <div id="astrid2" class="gridOption" onclick="select2(this, '4');">
+        <img src="images/kell.png" class="characterImg"/>
+        <p class="characterName">Astrid</p>
+      </div>
+    </div>
+  </div>
+  <div id="selections">
+    <select id="player1final" name="player1">
+      <option value="1">Volvo</option>
+      <option value="2">Saab</option>
+      <option value="3">Mercedes</option>
+      <option value="4">Audi</option>
+      <option value="5" selected>Banana</option>
+    </select>
+    <select id="player2final" name="player2">
+      <option value="1">Volvo</option>
+      <option value="2">Saab</option>
+      <option value="3">Mercedes</option>
+      <option value="4">Audi</option>
+      <option value="5" selected>Banana</option>
+    </select>
+  </div>
+  <input type="submit" value="Start">
+</form>

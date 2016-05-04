@@ -1,0 +1,67 @@
+#selectionContainer {
+  width: 90%;
+  overflow: auto;
+}
+
+#left, #right {
+  overflow: auto;
+  width: 40%;
+  margin-right: 5%;
+  display: inline-block;
+}
+
+.players {
+  border: 2px dashed #efefef;
+  width: 96%;
+  display: inline-block;
+  border-bottom: none;
+  float: left;
+  padding-bottom: 2%;
+  margin-left: 1%
+}
+
+.header {
+  font-size: 2vw;
+  font-family: sans-serif;
+  color: #191919;
+  display: inline-block;
+  float: left;
+}
+
+.gridOption:nth-child(even) {
+  border-left: 2px dashed #efefef;
+}
+
+.gridOption {
+  width: 49.1%;
+  display: inline-block;
+  border-bottom: 2px dashed #efefef;
+}
+
+.gridOption:hover {
+  background-color: #e1e1e1;
+  outline: .5vw solid #ffff66;
+}
+
+.characterImg {
+  width: 100%;
+}
+
+.characterName {
+  font-size: 1.5vw;
+  font-weight: bold;
+  font-family: sans-serif;
+  color: #191919;
+  margin: 0%;
+  text-align: center;
+  margin-bottom: 2%;
+}
+
+.active, .active2 {
+  background-color: #e1e1e1;
+  outline: .5vw solid #ffff66;
+}
+
+#selections {
+  display: none;
+}
