@@ -5,8 +5,35 @@
     <link href="layout.css" rel="stylesheet" type="text/css">
   </head>
   <body>
+    <h1 class="gamename">A Darker Shade Of Magic</h1>
+    <a href="/" class="changecharacters">Change Characters</a>
     <div id="gameContainer">
       <%= yield %>
+    </div>
+    <div id="p1">
+      <h1 class="playername">Player 1 (Left)</h1>
+      <div id="controls1">
+        <p><span class="button">A</span> = Left</p>
+        <p><span class="button">D</span> = Right</p>
+        <p><span class="button">Space</span> = Jump</p>
+      </div>
+      <div id="special-attacks1">
+        <p><span class="button">C</span> = Melee</p>
+        <p><span class="button">F</span> = Ranged</p>
+        <p><span class="button">X</span> = Special</p>
+      </div>
+    </div>
+    <div id="p2">
+      <h1 class="playername">Player 2 (Right)</h1>
+      <div id="controls2">
+        <p><span class="button">&larr;</span> = Left</p>
+        <p><span class="button">&rarr;</span> = Right</p>
+        <p><span class="button">Enter</span> = Jump</p>
+      </div>
+      <div id="special-attacks2">
+        <p><span class="button">/</span> = Melee</p>
+        <p><span class="button">.</span> = Ranged</p>
+        <p><span class="button">,</span> = Special</p>
     </div>
   </body>
 </html>
