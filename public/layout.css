@@ -1,6 +1,9 @@
 body {
   margin: 0%;
   font-family: sans-serif;
+  background-image: url("images/background9.jpg");
+  background-size: 12%;
+  color: white;
 }
 
 #gameContainer {
@@ -9,7 +12,7 @@ body {
 }
 
 .button {
-  background-color: gray;
+  background-color:#336699;
   display: inline-block;
   padding-top: 8%;
   padding-right:10%;
