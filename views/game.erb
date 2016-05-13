@@ -1,6 +1,8 @@
 <link href="index.css" rel="stylesheet" type="text/css">
 <h1 id="player1" style="display: none;"><%= @player1 %></h1>
 <h1 id="player2" style="display: none;"><%= @player2 %></h1>
+<h1 class="gamename">A Darker Shade Of Magic</h1>
+<a href="/" class="changecharacters">Change Characters</a>
 <canvas id="ctx" width="1000" height="488" style="border: 1px solid #191919; background-image: url(<%= @background %>);"></canvas>
 <audio autoplay loop id="bgMusic">
   <source src="<%= @audio %>" type="audio/mpeg">
@@ -12,3 +14,29 @@
   <source src="" type="audio/mpeg">
 </audio>
 <script src="scripts/game.js"></script>
+
+<div id="p1">
+  <h1 class="playername">Player 1 (Left)</h1>
+  <div id="controls1">
+    <p><span class="button">A</span> = Left</p>
+    <p><span class="button">D</span> = Right</p>
+    <p><span class="button">Space</span> = Jump</p>
+  </div>
+  <div id="special-attacks1">
+    <p><span class="button">C</span> = Melee</p>
+    <p><span class="button">F</span> = Ranged</p>
+    <p><span class="button">X</span> = Special</p>
+  </div>
+</div>
+<div id="p2">
+  <h1 class="playername">Player 2 (Right)</h1>
+  <div id="controls2">
+    <p><span class="button">&larr;</span> = Left</p>
+    <p><span class="button">&rarr;</span> = Right</p>
+    <p><span class="button">Enter</span> = Jump</p>
+  </div>
+  <div id="special-attacks2">
+    <p><span class="button">/</span> = Melee</p>
+    <p><span class="button">.</span> = Ranged</p>
+    <p><span class="button">,</span> = Special</p>
+</div>

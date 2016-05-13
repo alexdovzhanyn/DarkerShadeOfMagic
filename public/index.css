@@ -1,7 +1,232 @@
 #ctx {
-  /*width: 90%;
-  height: 80%;
-  background-image: url('bg.gif');*/
   background-size: 100%;
+  -webkit-background-size: 100%;
+  -moz-background-size: 100%;
+  -ms-background-size: 100%;
+  -o-background-size: 100%;
   background-position: bottom;
+}
+
+body {
+  margin: 0%;
+  -webkit-margin: 0%;
+  -moz-margin: 0%;
+  -ms-margin: 0%;
+  -o-margin: 0%;
+  font-family: sans-serif;
+  background-image: url("images/background9.jpg");
+  background-size: 12%;
+  -webkit-background-size: 12%;
+  -moz-background-size: 12%;
+  -ms-background-size: 12%;
+  -o-background-size: 12%;
+  color: white;
+  text-shadow: 1px 1px 3px #444;
+  -webkit-text-shadow: 1px 1px 3px #444;
+  -moz-text-shadow: 1px 1px 3px #444;
+  -ms-text-shadow: 1px 1px 3px #444;
+  -o-text-shadow: 1px 1px 3px #444;
+  margin-bottom: 5%;
+  -webkit-margin-bottom: 5%;
+  -moz-margin-bottom: 5%;
+  -ms-margin-bottom: 5%;
+  -o-margin-bottom: 5%;
+}
+
+#gameContainer {
+  margin-left: 12%;
+  -webkit-margin-left: 12%;
+  -moz-margin-left: 12%;
+  -ms-margin-left: 12%;
+  -o-margin-left: 12%;
+  margin-top: 2%;
+  -webkit-margin-top: 2%;
+  -moz-margin-top: 2%;
+  -ms-margin-top: 2%;
+  -o-margin-top: 2%;
+}
+
+.button {
+  background-color:#336699;
+  display: inline-block;
+  padding-top: 8%;
+  -webkit-padding-top: 8%;
+  -moz-padding-top: 8%;
+  -ms-padding-top: 8%;
+  -o-padding-top: 8%;
+  padding-right:10%;
+  -webkit-padding-right:10%;
+  -moz-padding-right:10%;
+  -ms-padding-right:10%;
+  -o-padding-right:10%;
+  padding-bottom:8%;
+  -webkit-padding-bottom:8%;
+  -moz-padding-bottom:8%;
+  -ms-padding-bottom:8%;
+  -o-padding-bottom:8%;
+  padding-left: 10%;
+  -webkit-padding-left: 10%;
+  -moz-padding-left: 10%;
+  -ms-padding-left: 10%;
+  -o-padding-left: 10%;
+  border-radius: .5vw;
+  -webkit-border-radius: .5vw;
+  -moz-border-radius: .5vw;
+  -ms-border-radius: .5vw;
+  -o-border-radius: .5vw;
+  text-align: center;
+  width: auto;
+  font-size: 1vw;
+  -webkit-font-size: 1vw;
+  -moz-font-size: 1vw;
+  -ms-font-size: 1vw;
+  -o-font-size: 1vw;
+}
+
+#p1 {
+  width: 30%;
+  -webkit-width: 30%;
+  -moz-width: 30%;
+  -ms-width: 30%;
+  -o-width: 30%;
+  display: inline-block;
+}
+
+#p2 {
+  margin-right: 5%;
+  -webkit-margin-right: 5%;
+  -moz-margin-right: 5%;
+  -ms-margin-right: 5%;
+  -o-margin-right: 5%;
+  width: 30%;
+  -webkit-width: 30%;
+  -moz-width: 30%;
+  -ms-width: 30%;
+  -o-width: 30%;
+  display: inline-block;
+  float: right;
+}
+
+#controls1 {
+  display:inline-block;
+  width: 50%;
+  -webkit-width: 50%;
+  -moz-width: 50%;
+  -ms-width: 50%;
+  -o-width: 50%;
+}
+
+#special-attacks1 {
+  display: inline-block;
+  width: 50%;
+  -webkit-width: 50%;
+  -moz-width: 50%;
+  -ms-width: 50%;
+  -o-width: 50%;
+  margin-left:-4%;
+  -webkit-margin-left:-4%;
+  -moz-margin-left:-4%;
+  -ms-margin-left:-4%;
+  -o-margin-left:-4%;
+}
+
+#controls2 {
+   display: inline-block;
+   width:50%;
+  -webkit-width:50%;
+  -moz-width:50%;
+  -ms-width:50%;
+  -o-width:50%;
+}
+
+#special-attacks2 {
+  display: inline-block;
+  width: 50%;
+  -webkit-width: 50%;
+  -moz-width: 50%;
+  -ms-width: 50%;
+  -o-width: 50%;
+  margin-left:-4%;
+  -webkit-margin-left:-4%;
+  -moz-margin-left:-4%;
+  -ms-margin-left:-4%;
+  -o-margin-left:-4%;
+}
+
+.playername {
+  font-size: 1.7vw;
+  -webkit-font-size: 1.7vw;
+  -moz-font-size: 1.7vw;
+  -ms-font-size: 1.7vw;
+  -o-font-size: 1.7vw;
+}
+
+.playername {
+  font-size: 1.7vw;
+  -webkit-font-size: 1.7vw;
+  -moz-font-size: 1.7vw;
+  -ms-font-size: 1.7vw;
+  -o-font-size: 1.7vw;
+}
+
+.gamename {
+  font-size: 2.4vw;
+  -webkit-font-size: 2.4vw;
+  -moz-font-size: 2.4vw;
+  -ms-font-size: 2.4vw;
+  -o-font-size: 2.4vw;
+  width: 85%;
+  -webkit-width: 85%;
+  -moz-width: 85%;
+  -ms-width: 85%;
+  -o-width: 85%;
+  text-align: center;
+  margin-top: 5%;
+  -webkit-margin-top: 5%;
+  -moz-margin-top: 5%;
+  -ms-margin-top: 5%;
+  -o-margin-top: 5%;
+}
+
+.changecharacters {
+  font-size: 1.5vw;
+  -webkit-font-size: 1.5vw;
+  -moz-font-size: 1.5vw;
+  -ms-font-size: 1.5vw;
+  -o-font-size: 1.5vw;
+  margin-bottom: 2%;
+  -webkit-margin-bottom: 2%;
+  -moz-margin-bottom: 2%;
+  -ms-margin-bottom: 2%;
+  -o-margin-bottom: 2%;
+  color: black;
+  background-color:#ffff00;
+  padding-top: 1%;
+  -webkit-padding-top: 1%;
+  -moz-padding-top: 1%;
+  -ms-padding-top: 1%;
+  -o-padding-top: 1%;
+  padding-right:2%;
+  -webkit-padding-right:2%;
+  -moz-padding-right:2%;
+  -ms-padding-right:2%;
+  -o-padding-right:2%;
+  padding-bottom:1%;
+  -webkit-padding-bottom:1%;
+  -moz-padding-bottom:1%;
+  -ms-padding-bottom:1%;
+  -o-padding-bottom:1%;
+  padding-left: 2%;
+  -webkit-padding-left: 2%;
+  -moz-padding-left: 2%;
+  -ms-padding-left: 2%;
+  -o-padding-left: 2%;
+  border-radius: .5vw;
+  -webkit-border-radius: .5vw;
+  -moz-border-radius: .5vw;
+  -ms-border-radius: .5vw;
+  -o-border-radius: .5vw;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
 }
