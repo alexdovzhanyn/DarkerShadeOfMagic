@@ -43,3 +43,7 @@ get '/play' do
   end
   erb :game
 end
+
+get "/about" do
+  erb :about 
+end

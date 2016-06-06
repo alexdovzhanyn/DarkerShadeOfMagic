@@ -1,0 +1,25 @@
+body {
+  margin: 0%;
+  -webkit-margin: 0%;
+  -moz-margin: 0%;
+  -ms-margin: 0%;
+  -o-margin: 0%;
+  font-family: sans-serif;
+  background-image: url("images/background9.jpg");
+  background-size: 12%;
+  -webkit-background-size: 12%;
+  -moz-background-size: 12%;
+  -ms-background-size: 12%;
+  -o-background-size: 12%;
+  color: white;
+  text-shadow: 1px 1px 3px #444;
+  -webkit-text-shadow: 1px 1px 3px #444;
+  -moz-text-shadow: 1px 1px 3px #444;
+  -ms-text-shadow: 1px 1px 3px #444;
+  -o-text-shadow: 1px 1px 3px #444;
+  margin-bottom: 5%;
+  -webkit-margin-bottom: 5%;
+  -moz-margin-bottom: 5%;
+  -ms-margin-bottom: 5%;
+  -o-margin-bottom: 5%;
+}

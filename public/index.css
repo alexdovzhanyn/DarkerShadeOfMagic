@@ -199,7 +199,7 @@ body {
   -moz-margin-bottom: 2%;
   -ms-margin-bottom: 2%;
   -o-margin-bottom: 2%;
-  color: black;
+  color: #fff;
   background-color:#ffff00;
   padding-top: 1%;
   -webkit-padding-top: 1%;
@@ -229,4 +229,8 @@ body {
   text-decoration: none;
   font-weight: bold;
   display: inline-block;
+}
+
+.changecharacters:hover {
+  background-color:  #ffff4d;
 }
